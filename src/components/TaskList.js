@@ -1,17 +1,7 @@
 import React from "react";
 import Task from "./Task.js"
 
-function TaskList({tasks, setTasks}) {
-
-
-
-  function handleDelete(event){
-    const selectedTaskText = (event.target.parentElement.children[1].innerText)
-    setTasks(tasks.filter((task) => {
-      return task.text !== selectedTaskText
-    }))
-  }
-
+function TaskList({tasks, handleDelete}) {
 
 
   function renderTasks() {
