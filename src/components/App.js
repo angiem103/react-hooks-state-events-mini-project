@@ -13,6 +13,13 @@ function App() {
   const [tasks, setTasks] = useState(TASKS)
   const [filterBy, setFilterBy] = useState("All")
 
+  function handleDelete(event){
+    const selectedTaskText = (event.target.parentElement.children[1].innerText)
+    setTasks(tasks.filter((task) => {
+      return task.text !== selectedTaskText
+    }))
+  }
+
   function filterTasksByCategory(event){
       setFilterBy(event.target.innerText)
   }
@@ -27,13 +34,23 @@ function App() {
     })
   )
 
+  function onTaskFormSubmit(details, category){
+    console.log(details, category)
+    const newTask = {
+      text: details,
+      category: category
+    }
+
+    setTasks([...tasks, newTask])
+  }
+
 
   return (
     <div className="App">
       <h2>My tasks</h2>
       <CategoryFilter categories={CATEGORIES} filterTasksByCategory = {filterTasksByCategory}/>
-      <NewTaskForm categories={CATEGORIES}/>
-      <TaskList tasks={filteredTasks} setTasks ={setTasks}/>
+      <NewTaskForm categories={CATEGORIES} onTaskFormSubmit={onTaskFormSubmit}/>
+      <TaskList tasks={filteredTasks} handleDelete={handleDelete}/>
       <Task/>
     </div>
   );

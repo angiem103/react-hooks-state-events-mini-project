@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 
-function NewTaskForm({categories}) {
+function NewTaskForm({categories, onTaskFormSubmit}) {
 
-  const [detais, setDetails] = useState("")
-  const [category, setCategory] = useState("")
+
+  const [details, setDetails] = useState("")
+  const [category, setCategory] = useState("Code")
 
   function handleDetails(event){
     setDetails(event.target.value)
@@ -23,8 +24,14 @@ function NewTaskForm({categories}) {
       })
     }
 
+  function handleSubmit(event){
+    event.preventDefault()
+    onTaskFormSubmit( details, category)
+
+  }
+
   return (
-    <form className="new-task-form">
+    <form className="new-task-form" onSubmit={handleSubmit}>
       <label>
         Details
         <input type="text" name="text"  onChange={handleDetails}/>
